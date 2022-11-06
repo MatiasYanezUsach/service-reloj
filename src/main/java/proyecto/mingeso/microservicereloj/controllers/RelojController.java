@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import proyecto.mingeso.microservicereloj.entities.RelojEntity;
+import proyecto.mingeso.microservicereloj.repositories.RelojRepository;
 import proyecto.mingeso.microservicereloj.services.RelojService;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.Objects;
 public class RelojController {
     @Autowired
     RelojService relojService;
+    @Autowired
+    RelojRepository relojRepository;
 
     @GetMapping
     public ResponseEntity<ArrayList<RelojEntity>> obtenerMarcas() {
@@ -24,6 +27,16 @@ public class RelojController {
             return ResponseEntity.noContent().build();
         }
         else {
+            return ResponseEntity.ok(marcas);
+        }
+    }
+    @GetMapping("/byRut/{rut_dado}")
+    public ResponseEntity<ArrayList<RelojEntity>> obtenerMarcasByRut(@PathVariable("rut_dado") String rut_dado) {
+        ArrayList<RelojEntity> marcas = relojRepository.findByRut(rut_dado);
+        if(marcas.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        else{
             return ResponseEntity.ok(marcas);
         }
     }
