@@ -31,7 +31,7 @@ public class RelojService {
     RestTemplate restTemplate;
 
     public Empleado findByRut(String rut_dado){
-        Empleado empleado = restTemplate.getForObject("http://localhost:8090/empleado/byRut/" + rut_dado, Empleado.class);
+        Empleado empleado = restTemplate.getForObject("http://localhost:8090/microservice-empleado/byRut/" + rut_dado, Empleado.class);
         return empleado;
     }
 
