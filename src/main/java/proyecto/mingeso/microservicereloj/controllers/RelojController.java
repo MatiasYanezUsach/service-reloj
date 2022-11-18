@@ -41,15 +41,14 @@ public class RelojController {
         }
     }
     @PostMapping("/importar")
-    public String importarArchivos(@RequestParam("archivos") MultipartFile file, RedirectAttributes ms) {
+    public ResponseEntity<String> importarArchivos(@RequestParam("file") MultipartFile file) {
         String nombreArchivo= file.getOriginalFilename();
         if (Objects.equals(nombreArchivo, "DATOS.txt") || Objects.equals(nombreArchivo, "DATA.txt") ) {
             relojService.lectura(relojService.save(file));
-            ms.addFlashAttribute("mensaje", "Archivo importado correctamente");
+            return ResponseEntity.ok().body("Archivo subido correctamente");
         }
         else{
-            ms.addFlashAttribute("mensaje", "El archivo ingresado no puede ser importado");
+            return ResponseEntity.badRequest().body("El archivo ingresado no es valido");
         }
-        return "redirect:/";
     }
 }
