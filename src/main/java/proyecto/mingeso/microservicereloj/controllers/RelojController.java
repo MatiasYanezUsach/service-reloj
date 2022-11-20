@@ -13,6 +13,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/marcas")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RelojController {
     @Autowired
     RelojService relojService;
